@@ -276,6 +276,113 @@ input.hoursInput {
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        /* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.3s ease;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+/* Modal Body */
+.modal-body {
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-description {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Button Styles */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    
+}
+
+.confirm-btn {
+    background-color: #28a745;
+    color: white;
+    transition: background-color 0.3s ease;
+    width: 35%;
+}
+
+.confirm-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.3s ease;
+    width: 30%;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide-up Animation */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -287,7 +394,7 @@ input.hoursInput {
     <option value="">Sélectionnez Equipe</option>
 </select>
 
-<p class="summary"><span id="selectedCount">0</span> Ouvriers<button onclick="saveData()">Envoyer</button> <button onclick="toggleSelectAll()"> tout</button> <button class="plus-button" onclick="openModal()">+</button><a href="https://aroma-rh.github.io/9POINTAGE/">
+<p class="summary"><span id="selectedCount">0</span> Ouvriers<button onclick="OPED()">Envoyer</button> <button onclick="toggleSelectAll()"> tout</button> <button class="plus-button" onclick="openModal()">+</button><a href="https://aroma-rh.github.io/9POINTAGE/">
     <button class="plus-button" >P</button>
 </a></p>
 
@@ -312,8 +419,26 @@ input.hoursInput {
         </div>
         
     </div>
+    
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeConfirmationModal()">&times;</span>
+        <div class="modal-body">
+            <h2>Êtes-vous sûr de vouloir envoyer le pointage ?</h2>
+            <div class="modal-buttons">
+                <button class="confirm-btn" onclick="saveData()">OUI</button>
+                <button class="cancel-btn" onclick="closeConfirmationModal()">NON</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+    
     <script>
+
         let today = new Date().toISOString().split('T')[0];
 
 
@@ -357,7 +482,7 @@ function openModal() {
         finca: finca
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbzc40u7FBeYISqVRxoNmyuFjnM-38JrpE49e1_VNUcjBgHhTVoSS6usXJ5X3Dli9YL8RA/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec", {
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "application/json" },
@@ -390,7 +515,7 @@ function toggleSelectAll() {
 }
 
 async function fetchGroups() {
-    const url = "https://script.google.com/macros/s/AKfycbzepFi12NAzSQYScWN0QEZgDYrtZVmLKz4tVbfrHU1iWx9hvb6pkLeKnuANZcfQUGH-3Q/exec";
+    const url = "https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec";
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -482,8 +607,7 @@ function updateRowSelection(row, selected) {
     const h12 = ["4116", "456", "1648" ,"4029" ];
     const h9 = ["7416", "12419", "19939", "26730", "27399", "30609", "37079", "40183", "38774", "41294", "44943", "28679", "58451","34372"];
     const h10 = ["4236", "7694", "13536", "15062","23825", "28541", "29730", "45894", "48337", "41371"];
-        const fix = ["69", "1829", "4263", "12488", "14829", "21477", "27496", "28055", "57281", "52206", "32781", "33567", "36435", "36688", "40182", "42195", "21995", "4954", "43861", "27495", "57743", "27893", "3655", "3216", "6035", "4935", "57843", "23133","24375","22423","58806","31445","55902","37541","46467"];
-
+      const fix = ["69", "1829", "4263", "12488", "14829", "21477", "27496", "28055", "57281", "52206", "32781", "33567", "36435", "36688", "40182", "42195", "21995", "4954", "43861", "27495", "57743", "27893", "3655", "3216", "6035", "4935", "57843", "23133","24375","22423","58806","31445","55902","37541","46467"];
     if (selected) {
         row.classList.add("selected");
 
@@ -515,7 +639,15 @@ function updateRowSelection(row, selected) {
             document.getElementById("selectedCount").textContent = count;
         }
 
-        
+        function OPED() {
+    // Show the confirmation modal
+    document.getElementById("confirmationModal").style.display = "block";
+}
+
+// Function to close the confirmation modal
+function closeConfirmationModal() {
+    document.getElementById("confirmationModal").style.display = "none";
+}
 
 
 
@@ -541,7 +673,7 @@ function updateRowSelection(row, selected) {
                 return;
             }
 
-            const url = "https://script.google.com/macros/s/AKfycbzepFi12NAzSQYScWN0QEZgDYrtZVmLKz4tVbfrHU1iWx9hvb6pkLeKnuANZcfQUGH-3Q/exec";
+            const url = "https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec";
             try {
                 const response = await fetch(url, {
                     method: "POST",
@@ -560,7 +692,10 @@ function updateRowSelection(row, selected) {
                 checkbox.checked = false;
                 updateRowSelection(checkbox.closest("tr"), false);
             });
+            closeConfirmationModal();
         }
+
+
 
         fetchGroups();
     </script>
