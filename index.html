@@ -482,7 +482,7 @@ function openModal() {
         finca: finca
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbx2oZJcaSD3IGt316_opGvsuGjXmACOMlqMjOMOtQRqvNcD2vB2sNHTMQ6Y1SSu1A78NA/exec", {
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "application/json" },
@@ -515,7 +515,7 @@ function toggleSelectAll() {
 }
 
 async function fetchGroups() {
-    const url = "https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec";
+    const url = "https://script.google.com/macros/s/AKfycbx2oZJcaSD3IGt316_opGvsuGjXmACOMlqMjOMOtQRqvNcD2vB2sNHTMQ6Y1SSu1A78NA/exec";
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -673,7 +673,7 @@ function closeConfirmationModal() {
                 return;
             }
 
-            const url = "https://script.google.com/macros/s/AKfycbxbrJiAAZkWX_DA1OZNIg3qjKHIuuUnQB5nYDtKyQxejZXqXWUfcXBi114ofy3uBklS/exec";
+            const url = "https://script.google.com/macros/s/AKfycbx2oZJcaSD3IGt316_opGvsuGjXmACOMlqMjOMOtQRqvNcD2vB2sNHTMQ6Y1SSu1A78NA/exec";
             try {
                 const response = await fetch(url, {
                     method: "POST",
